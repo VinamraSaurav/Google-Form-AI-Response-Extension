@@ -1,0 +1,21 @@
+{
+    "manifest_version": 3,
+    "name": "Google Form Data Logger",
+    "version": "1.0",
+    "description": "Logs Google Form questions and choices to the console.",
+    "permissions": ["activeTab", "scripting"],
+    "host_permissions": ["https://docs.google.com/forms/*"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://docs.google.com/forms/*"],
+        "js": ["content.js"]
+      }
+    ]
+  }
+  
