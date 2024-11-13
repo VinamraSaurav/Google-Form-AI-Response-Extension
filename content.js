@@ -1,7 +1,6 @@
 const form = document.querySelector('form'); 
 const formElements = form.querySelectorAll('*');
 
-
 const questions = [];
 const listItems = form.querySelectorAll('div[role="listitem"]');
 
@@ -12,15 +11,12 @@ listItems.forEach(item => {
   }
   const questionDiv = item.querySelector('div[data-params]');
   const imgDiv = item.querySelector('img');
-  if(imgDiv) data['img-url'] = imgDiv.getAttribute('src');
   if(questionDiv) data['data-params'] = questionDiv.getAttribute('data-params');
+  if(imgDiv) data['img-url'] = imgDiv.getAttribute('src');
   if (questionDiv||imgDiv) {
     questions.push(data);
   }
 });
-
-
-
 
 function decodeHtmlEntities(str) {
   const element = document.createElement('div');
@@ -33,13 +29,13 @@ function parseFormData(questions) {
     try {
       const formData = {
         text: '',
-        description: '',  // Added description field
+        description: '',
         options: [],
         imgUrl: question['img-url'],
         imgText: null
       };
 
-      // First decode HTML entities in the question string
+      // Decode HTML entities in the question string
       question = decodeHtmlEntities(question['data-params']);
 
       // Extract question text - second item in the array
@@ -54,18 +50,17 @@ function parseFormData(questions) {
         formData.description = descriptionMatch[1];
       }
 
-      // Extract options - looking for the validation array pattern
-      const optionsSection = question.match(/\[\[\d+,\[(.*?)\],false/);
+      // Extract options - more flexible extraction logic
+      const optionsSection = question.match(/\[\[\d+,\[(.*?)\]\]\]/);
       if (optionsSection) {
-        // Extract all quoted strings from the options section
-        const optionsMatches = optionsSection[1].match(/\["([^"]+)"/g);
-        if (optionsMatches) {
-          formData.options = optionsMatches.map(opt => 
-            opt.match(/\["([^"]+)"/)[1]
-          );
-        }
-      }
+        // Extracting each option within the nested array pattern
+        const optionsMatches = optionsSection[1].split(/],\[/);
 
+        formData.options = optionsMatches.map(option => {
+          const match = option.match(/"([^"]+)"/);
+          return match ? match[1] : null;
+        }).filter(opt => opt !== null);  // Remove any null values
+      }
 
       return formData;
     } catch (error) {
@@ -80,7 +75,6 @@ function parseFormData(questions) {
     }
   });
 }
-
 
 const parsedData = parseFormData(questions);
 console.log(JSON.stringify(parsedData, null, 2));
