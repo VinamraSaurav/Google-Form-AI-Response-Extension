@@ -25,28 +25,70 @@
         body {
             font-family: Arial, sans-serif;
             padding: 10px;
-            width: 250px;
+            width: 300px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 8px;
         }
 
         button {
-            width: 100%;
             padding: 8px;
-            background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            margin-top: 5px;
+            transition: background-color 0.2s;
         }
 
-        button:hover {
+        #fetchData {
+            background-color: #4CAF50;
+            flex: 2;
+        }
+
+        #fetchData:hover {
             background-color: #45a049;
+        }
+
+        #clearData {
+            background-color: #f44336;
+            flex: 1;
+            display: none;
+        }
+
+        #clearData:hover {
+            background-color: #da190b;
         }
 
         #status {
             margin-top: 10px;
             font-size: 14px;
             color: #333;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .response-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .response-header h3 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cache-badge {
+            font-size: 12px;
+            color: #666;
+            background-color: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: normal;
         }
 
         ul {
@@ -62,14 +104,24 @@
             display: block;
             font-weight: bold;
         }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body>
-    <button id="fetchData">Fetch Form Data</button>
+    <div class="button-container">
+        <button id="fetchData">Fetch Form Data</button>
+        <button id="clearData">Clear</button>
+    </div>
     <div id="loader"></div>
-    <div id="status"></div>
-    
-    <!-- Script for popup logic -->
+    <div id="status" class="fade-in"></div>
     <script src="popup.js"></script>
 </body>
 </html>

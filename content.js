@@ -1,6 +1,5 @@
-
 (function() {
-  let form =  document.querySelector('form');
+  let form = document.querySelector('form');
   let formElements = form.querySelectorAll('*');
 
   function decodeHtmlEntities(str) {
@@ -10,8 +9,8 @@
   }
 
   function parseFormData(questions) {
+    // Your existing parseFormData function remains the same
     return questions.map(question => {
-      // Your existing parseFormData logic goes here
       try {
         const formData = {
           text: '',
@@ -21,31 +20,26 @@
           imgText: null
         };
   
-        // Decode HTML entities in the question string
         question = decodeHtmlEntities(question['data-params']);
   
-        // Extract question text - second item in the array
         const textMatch = question.match(/^\%\.\@\.\[\d+,"([^"]+)"/);
         if (textMatch) {
           formData.text = textMatch[1];
         }
   
-        // Extract description - third item in the array
         const descriptionMatch = question.match(/^\%\.\@\.\[\d+,"[^"]+","([^"]+)"/);
         if (descriptionMatch) {
           formData.description = descriptionMatch[1];
         }
   
-        // Extract options - more flexible extraction logic
         const optionsSection = question.match(/\[\[\d+,\[(.*?)\]\]\]/);
         if (optionsSection) {
-          // Extracting each option within the nested array pattern
           const optionsMatches = optionsSection[1].split(/],\[/);
   
           formData.options = optionsMatches.map(option => {
             const match = option.match(/"([^"]+)"/);
             return match ? match[1] : null;
-          }).filter(opt => opt !== null);  // Remove any null values
+          }).filter(opt => opt !== null);
         }
   
         return formData;
@@ -80,28 +74,36 @@
   });
 
   const parsedData = parseFormData(questions);
-  // console.log(JSON.stringify(parsedData, null, 2));
-  // const url ='https://imagetotext-5y6r.onrender.com'
   const url = 'http://localhost:3000';
 
-  fetch(url+"/api/gemini/content", {
+  // Make API call and store response
+  fetch(url + "/api/gemini/content", {
     method: 'POST',
     headers: {
-        'Content-Type': 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({ question: parsedData }),
-})
-.then(response => response.json())
-.then(data => {
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    // Store the response in Chrome storage
+    const formUrl = window.location.href;
+    const storageData = {};
+    storageData[formUrl] = data;
+    chrome.storage.local.set(storageData);
+    
     // Send the data back to popup.js
-    chrome.runtime.sendMessage({ action: "apiResponse", data });
-})
-.catch(error => {
+    chrome.runtime.sendMessage({ 
+      action: "apiResponse", 
+      data 
+    });
+  })
+  .catch(error => {
     console.error("Error making API call:", error);
-    chrome.runtime.sendMessage({ action: "apiResponseError", error: "Failed to fetch data. Please try again." });
-});
-
-  console.log(JSON.stringify(parsedData, null, 2));
-
-
+    chrome.runtime.sendMessage({ 
+      action: "apiResponseError", 
+      error: "Failed to fetch data. Please try again." 
+    });
+  });
 })();
