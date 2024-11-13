@@ -13,8 +13,8 @@ listItems.forEach(item => {
   const questionDiv = item.querySelector('div[data-params]');
   const imgDiv = item.querySelector('img');
   if(imgDiv) data['img-url'] = imgDiv.getAttribute('src');
-  if (questionDiv) {
-    data['data-params'] = questionDiv.getAttribute('data-params');
+  if(questionDiv) data['data-params'] = questionDiv.getAttribute('data-params');
+  if (questionDiv||imgDiv) {
     questions.push(data);
   }
 });
