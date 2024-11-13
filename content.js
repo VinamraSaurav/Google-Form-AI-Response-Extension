@@ -80,5 +80,28 @@
   });
 
   const parsedData = parseFormData(questions);
+  // console.log(JSON.stringify(parsedData, null, 2));
+  // const url ='https://imagetotext-5y6r.onrender.com'
+  const url = 'http://localhost:3000';
+
+  fetch(url+"/api/gemini/content", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ question: parsedData }),
+})
+.then(response => response.json())
+.then(data => {
+    // Send the data back to popup.js
+    chrome.runtime.sendMessage({ action: "apiResponse", data });
+})
+.catch(error => {
+    console.error("Error making API call:", error);
+    chrome.runtime.sendMessage({ action: "apiResponseError", error: "Failed to fetch data. Please try again." });
+});
+
   console.log(JSON.stringify(parsedData, null, 2));
+
+
 })();
