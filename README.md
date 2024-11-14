@@ -42,6 +42,10 @@
 - **Smart Answer Generation**: Processes form data with OCR (using Tesseract) and AI (Google's Gemini AI) for response suggestions.
 - **Real-time Updates**: Displays a loader until the response is ready, enhancing user experience.
 
+## Additional Documentation
+- [Project Status and Roadmap](docs/PROJECT_STATUS.md)
+
+
 ## Technologies Used 🔧
 
 - **Frontend**: 
