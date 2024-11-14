@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Google Form Data Logger",
+  "name": "Google Form AI Response",
   "version": "1.0",
-  "description": "Logs Google Form questions and choices to the console.",
+  "description": "A Chrome extension that scans questions and options from Google Forms, retrieves data, and intelligently generates answers to help streamline form completion.",
   "permissions": ["activeTab", "scripting", "storage"],
   "host_permissions": ["https://docs.google.com/forms/*"],
   "background": {

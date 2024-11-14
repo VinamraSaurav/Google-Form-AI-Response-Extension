@@ -90,19 +90,19 @@ You can either clone the repository or download the latest release.
 
    In the Chrome Extensions page, toggle **Developer mode** on (usually located in the top right corner of the page).
 
-   ![Enable Developer Mode](images/developer.jpg)
+   ![Enable Developer Mode](assets/images/developer.webp)
 
 4. **Load the Unpacked Extension**
 
    Click on **Load unpacked**.
 
-   ![Load Unpacked](images/load_unpacked.jpg)
+   ![Load Unpacked](assets/images/load_unpacked.webp)
 
 5. **Select the Extension Folder**
 
    In the file dialog, navigate to the cloned repository folder, select it, and click **Open**.
 
-   ![Select Folder](images/select_folder.jpg)
+   ![Select Folder](assets/images/select_folder.webp)
 
 
 ## Contributing 🤝
