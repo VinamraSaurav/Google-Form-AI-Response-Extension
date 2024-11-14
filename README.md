@@ -43,7 +43,7 @@
 - **Real-time Updates**: Displays a loader until the response is ready, enhancing user experience.
 
 ## Additional Documentation
-- [Project Status and Roadmap](docs/PROJECT_STATUS.md)
+- [Project Wiki](https://github.com/VinamraSaurav/Google-Form-AI-Response-Extension/wiki)
 
 
 ## Technologies Used 🔧
