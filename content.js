@@ -74,7 +74,8 @@
   });
 
   const parsedData = parseFormData(questions);
-  const url = 'http://localhost:3000';
+  // const url = 'http://localhost:3000';
+  const url = "https://imagetotext-5y6r.onrender.com";
 
   // Make API call and store response
   fetch(url + "/api/gemini/content", {
